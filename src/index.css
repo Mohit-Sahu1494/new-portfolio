@@ -11,6 +11,8 @@
     padding: 0;
     background-color: var(--background);
     color: var(--foreground);
+    height:100vh;
+    width:100vw;
   }
   * {
     @apply border-border outline-ring/50;
@@ -18,6 +20,33 @@
   html {
     @apply font-sans;
   }
+}
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: none;
+}
+
+/* IE and old Edge */
+* {
+  -ms-overflow-style: none;
+}
+.glass {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+@layer utilities {
+  .backdrop-blur-sm { -webkit-backdrop-filter: blur(4px); }
+  .backdrop-blur-md { -webkit-backdrop-filter: blur(12px); }
+  .backdrop-blur-lg { -webkit-backdrop-filter: blur(16px); }
+  .backdrop-blur-xl { -webkit-backdrop-filter: blur(24px); }
+  .backdrop-blur-2xl { -webkit-backdrop-filter: blur(40px); }
+  .backdrop-blur-3xl { -webkit-backdrop-filter: blur(64px); }
 }
 
 @theme {

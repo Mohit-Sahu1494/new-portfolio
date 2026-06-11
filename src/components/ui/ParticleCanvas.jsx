@@ -1,6 +1,18 @@
 
 import { useRef,useEffect,useState } from "react";
 export default function ParticleCanvas (){
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+
   const canvasRef = useRef(null);
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -11,11 +23,11 @@ export default function ParticleCanvas (){
     const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
     resize();
     window.addEventListener("resize", resize);
-    for (let i = 0; i < 200; i++) {
+    for (let i = 0; i < (isMobile ? 50 : 200); i++) {
       particles.push({
         x: Math.random() * canvas.width, y: Math.random() * canvas.height,
         vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5,
-        r: Math.random() * 2 + 0.5, alpha: Math.random() * 0.6 + 0.1
+        r: Math.random() * 2 + 0.5, alpha: Math.random() * 0.5 + 0.1
       });
     }
     const draw = () => {

@@ -32,7 +32,7 @@ const loadingStates = [
 
 export default function MultiStepLoaderDemo({setLoading}) {
   const [isLoading, setIsLoading] = useState(true);
-  const DURATION = 1000;
+  const DURATION = 500;
 
   React.useEffect(() => {
     const totalDuration = loadingStates.length * DURATION;

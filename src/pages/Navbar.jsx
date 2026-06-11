@@ -1,172 +1,179 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { Menu, X, Sun, Moon } from "lucide-react";
+import React, { useState } from "react";
+import { Menu, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
-export default function Navbar({ theme, setTheme }) {
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const links = ["Home", "About", "Skills", "Projects", "Experience", "Achievements", "GitHub", "LeetCode", "Contact"];
+const navItems = [
+  { label: "Home", id: "home" },
+  { label: "About", id: "about" },
+  { label: "Skills", id: "skills" },
+  { label: "Projects", id: "projects" },
+  { label: "Contact Us", id: "contact" },
+];
 
-  useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handler);
-    return () => window.removeEventListener("scroll", handler);
-  }, []);
-
-  // Lock scroll when menu is open
-  useEffect(() => {
-    if (menuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [menuOpen]);
-
-  const scrollTo = (id) => {
-    const element = document.getElementById(id.toLowerCase());
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-    setMenuOpen(false);
-  };
-
+function Navbar({ theme }) {
+  const [isOpen, setIsOpen] = useState(false);
   const isDark = theme === "dark";
 
-  const menuVariants = {
-    closed: {
-      opacity: 0,
-      y: "-100%",
-      transition: {
-        duration: 0.5,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-    open: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-  };
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    const container = document.querySelector("main");
+    if (element && container) {
+      const offset = 80; // Height of the navbar
+      const elementPosition = element.offsetTop;
+      const offsetPosition = elementPosition - offset;
 
-  const containerVariants = {
-    open: {
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.3,
-      },
-    },
-    closed: {
-      transition: {
-        staggerChildren: 0.05,
-        staggerDirection: -1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    open: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.4,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-    closed: {
-      y: 20,
-      opacity: 0,
-      transition: {
-        duration: 0.4,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
+      container.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+    setIsOpen(false);
   };
 
   return (
     <>
-      <nav
-        className={`fixed top-0 left-0 right-0 z-[1002] transition-all duration-300
-      ${scrolled ? (isDark ? "bg-[#0A0A0A]/95 backdrop-blur-xl " : "bg-white/95 backdrop-blur-xl border-b border-black/10") : "bg-transparent"}`}
+      <nav 
+        style={{ 
+          backdropFilter: "blur(20px)", 
+          WebkitBackdropFilter: "blur(20px)" 
+        }}
+        className={`fixed top-0 left-0 w-full z-50 px-4 border-b transition-colors duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.2)]
+          ${isDark ? "bg-black/20 border-white/10" : "bg-white/20 border-black/5"}`}
       >
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between w-full">
-          {/* Logo */}
-          <div
-            className="text-[22px] font-extrabold bg-gradient-to-br from-[#3B82F6] to-[#8B5CF6] bg-clip-text text-transparent cursor-pointer shrink-0 z-50"
-            onClick={() => scrollTo("home")}
-          >
-            Mohit Sahu
-          </div>
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+          <h1 
+            onClick={() => scrollToSection("home")}
+            className={`text-xl font-bold cursor-pointer transition-colors duration-300 ${isDark ? "text-white" : "text-black"}`}>
+            Mohit.dev
+          </h1>
 
-          {/* Desktop Links */}
-          <div className="hidden lg:flex gap-8 items-center flex-1 justify-center">
-            {links.map((l) => (
-              <button
-                key={l}
-                onClick={() => scrollTo(l === "GitHub" ? "github" : l === "LeetCode" ? "leetcode" : l.toLowerCase())}
-                className={`group relative bg-transparent border-none cursor-pointer text-[14px] font-medium transition-colors duration-200 py-1
-                ${isDark ? "text-[#9CA3AF] hover:text-[#3B82F6]" : "text-[#6B7280] hover:text-[#3B82F6]"}`}
-              >
-                {l}
-                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#3B82F6] transition-all duration-300 group-hover:w-full" />
-              </button>
+          {/* Desktop Nav */}
+          <ul className={`hidden lg:flex items-center gap-8 transition-colors duration-300 ${isDark ? "text-white/80" : "text-black/70"}`}>
+            {navItems.map((item) => (
+              <li
+                key={item.label}
+                onClick={() => scrollToSection(item.id)}
+                className="
+                  cursor-pointer hover:text-cyan-400 hover:-translate-y-1 transition-all duration-300 ">
+                {item.label}
+              </li>
             ))}
-          </div>
+          </ul>
 
-          {/* Action Buttons */}
-          <div className="flex gap-4 items-center shrink-0 z-50">
-            <button
-              onClick={() => setTheme((t) => (t === "dark" ? "light" : "dark"))}
-              className={`p-2 rounded-full border border-[#8B5CF6]/40 cursor-pointer transition-all duration-300 hover:scale-110
-              ${isDark ? "bg-[#1F2937] text-yellow-400" : "bg-[#F3F4F6] text-[#8B5CF6]"}`}
-            >
-              {isDark ? <Sun size={20} /> : <Moon size={20} />}
-            </button>
-            <button
-              onClick={() => setMenuOpen((o) => !o)}
-              className={`lg:hidden bg-transparent border-none cursor-pointer transition-transform duration-300 hover:scale-110
-              ${isDark ? "text-[#F8FAFC]" : "text-[#111827]"}`}
-            >
-              {menuOpen ? <X size={28} /> : <Menu size={28} />}
-            </button>
-          </div>
+          {/* Desktop Resume */}
+          <button
+            className={`hidden lg:block px-5 py-2 rounded-xl border transition-all duration-300 backdrop-blur-md 
+              ${isDark 
+                ? "bg-white/10 border-white/20 text-white hover:bg-white/20" 
+                : "bg-black/5 border-black/10 text-black hover:bg-black/10"
+              } hover:scale-105`}
+          >
+            Resume
+          </button>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsOpen(true)}
+            className={`lg:hidden p-2 rounded-xl border transition-all duration-300 backdrop-blur-md hover:scale-110
+              ${isDark 
+                ? "bg-white/10 border-white/20 text-white" 
+                : "bg-black/5 border-black/10 text-black"
+              }`}
+          >
+            <Menu size={24} />
+          </button>
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu */}
       <AnimatePresence>
-        {menuOpen && (
+        {isOpen && (
           <motion.div
-            initial="closed"
-            animate="open"
-            exit="closed"
-            variants={menuVariants}
-            className={`fixed inset-0 z-[1001] lg:hidden flex flex-col items-center justify-center
-            ${isDark ? "bg-[#0A0A0A]/98" : "bg-white/98"}`}
+            initial={{ opacity: 0, backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)" }}
+            animate={{ opacity: 1, backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}
+            exit={{ opacity: 0, backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)" }}
+            transition={{ duration: 0.4 }}
+            className="
+              fixed
+              inset-0
+              z-[100]
+              bg-black/60
+              lg:hidden
+            "
           >
-            <motion.div variants={containerVariants} className="flex flex-col items-center gap-6">
-              {links.map((l) => (
+            {/* Close Button */}
+            <div className="flex justify-end px-10 py-4 ">
+              <button
+                onClick={() => setIsOpen(false)}
+                className="
+                  p-2
+                  rounded-xl
+                  bg-white/10
+                  border border-white/20
+                  text-white
+                  hover:rotate-90
+                  transition-all duration-300
+                "
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            {/* Links */}
+            <div className="flex flex-col items-center justify-center h-[80vh] gap-8">
+              {navItems.map((item, index) => (
                 <motion.button
-                  key={l}
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.1, x: 10 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => scrollTo(l === "GitHub" ? "github" : l === "LeetCode" ? "leetcode" : l.toLowerCase())}
-                  className={`bg-transparent border-none cursor-pointer text-3xl font-bold transition-colors duration-300
-                    ${isDark ? "text-[#F8FAFC] hover:text-[#3B82F6]" : "text-[#111827] hover:text-[#3B82F6]"}`}
+                  key={item.label}
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 40 }}
+                  transition={{
+                    delay: index * 0.1,
+                    duration: 0.5,
+                  }}
+                  onClick={() => scrollToSection(item.id)}
+                  className="
+                    text-white
+                    text-4xl
+                    font-semibold
+                    hover:text-cyan-400
+                    hover:scale-110
+                    transition-all duration-300
+                  "
                 >
-                  {l}
+                  {item.label}
                 </motion.button>
               ))}
-            </motion.div>
+
+              <motion.button
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 40 }}
+                transition={{
+                  delay: navItems.length * 0.1,
+                  duration: 0.5,
+                }}
+                className="
+                  mt-8
+                  px-6
+                  py-3
+                  rounded-xl
+                  bg-white/10
+                  border border-white/20
+                  text-white
+                  hover:bg-white/20
+                  hover:scale-105
+                  transition-all duration-300
+                "
+              >
+                Resume
+              </motion.button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
     </>
   );
 }
+
+export default Navbar;

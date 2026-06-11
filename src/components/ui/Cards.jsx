@@ -50,7 +50,7 @@ export default function Card({theme}) {
       <div
         className="absolute w-[100px] h-[150px] top-1/4 left-1/2 -translate-x-1/2 z-10 preserve-3d animate-rotating"
         style={{
-          "--quantity": colors.length,
+          "--quantity": skillGroups.length,
           "--w": "100px",
           "--h": "150px",
           "--translateZ": "250px",
@@ -66,7 +66,7 @@ export default function Card({theme}) {
               "--index": index,
               "--color-card": color.color,
               borderColor: `rgba(${color.color},1)`,
-              transform: `rotateY(calc((360deg / ${colors.length}) * ${index})) translateZ(250px)`,
+              transform: `rotateY(calc((360deg / ${skillGroups.length}) * ${index})) translateZ(250px)`,
             }}
           >
             <div
