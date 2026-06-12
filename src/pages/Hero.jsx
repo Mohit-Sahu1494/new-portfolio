@@ -104,7 +104,13 @@ function Hero() {
                               style={{ backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)" }}
                             >
                                 <Download size={18} />
-                                Resume
+                             <a
+  href="/Blue and Gray Simple Professional CV Resume.pdf"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  Resume
+</a>
                             </button>
                         </div>
 

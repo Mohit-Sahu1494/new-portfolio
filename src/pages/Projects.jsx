@@ -8,55 +8,60 @@ import {
 
 import { FaGithub } from "react-icons/fa";
 
-
 const projects = [
   {
-    title: "Social Media Platform",
+    title: "Agent Task Distribute",
     description:
-      "A full-stack social media application with authentication, posts, comments, likes, followers and profile management.",
+      "A full-stack social media platform featuring user authentication, post creation, likes, comments, follower system, profile management, and real-time user interactions.",
     tech: ["React", "Node.js", "MongoDB"],
-    github: "#",
+    github: "https://github.com/Mohit-Sahu1494/agent-distribution",
     live: "#",
+    image:"/projects/Agent-task.png"
   },
   {
-    title: "Online Voting System",
+    title: "Library Management System",
     description:
-      "Secure online voting platform with admin dashboard, candidate management and real-time vote counting.",
+      "A digital library management system that allows users to manage books, issue and return records, member details, and track library activities efficiently.",
+    tech: ["React","React-Redux",],
+    github: "https://github.com/Mohit-Sahu1494/library-management-system",
+    live: "https://library-management-system-nine-weld.vercel.app/dashboard",
+      image:"/projects/libarayManage.png"
+  },
+  {
+    title: "Student Dashboard",
+    description:
+      "An interactive student dashboard for tracking academic performance, attendance, assignments, schedules, and personalized learning progress.",
+    tech: ["React", "Supabase"],
+    github: "https://github.com/Mohit-Sahu1494/student-dashboard",
+    live: "https://student-dashboard-lyart-nu.vercel.app/",
+      image:"/projects/student.png"
+  },
+  {
+    title: "Authentication System",
+    description:
+      "A secure authentication system with user registration, login, password encryption, JWT-based authorization, and protected routes.",
     tech: ["React", "Express", "MongoDB"],
-    github: "#",
-    live: "#",
+    github: "https://github.com/Mohit-Sahu1494/Auth-system",
+    live: "https://notes-app-ten-eosin.vercel.app/",
+      image:"/projects/auth.png"
   },
   {
-    title: "Online Voting System",
+    title: "Fitness Tracker Landing Page",
     description:
-      "Secure online voting platform with admin dashboard, candidate management and real-time vote counting.",
-    tech: ["React", "Express", "MongoDB"],
-    github: "#",
-    live: "#",
+      "A modern and responsive fitness tracker landing page designed to showcase workout tracking, health monitoring features, and user engagement.",
+    tech: ["React"],
+    github: "https://github.com/Mohit-Sahu1494/Fitness-Tracker",
+    live: "https://mohit-sahu1494.github.io/Fitness-Tracker/",
+      image:"/projects/fitness.png"
   },
   {
-    title: "Online Voting System",
+    title: "Notes App",
     description:
-      "Secure online voting platform with admin dashboard, candidate management and real-time vote counting.",
-    tech: ["React", "Express", "MongoDB"],
-    github: "#",
+      "A simple and efficient notes management application that allows users to create, edit, organize, and delete notes with an intuitive interface.",
+    tech: ["React", "Express.js", "MongoDB"],
+    github: "https://github.com/Mohit-Sahu1494/notes_app",
     live: "#",
-  },
-  {
-    title: "Event Ticket Booking",
-    description:
-      "Event management and ticket booking platform with QR verification and payment integration.",
-    tech: ["React", "Node.js", "MySQL"],
-    github: "#",
-    live: "#",
-  },
-  {
-    title: "E-Commerce Website",
-    description:
-      "Modern e-commerce platform with cart, wishlist, checkout and admin management.",
-    tech: ["React", "PHP", "MySQL"],
-    github: "#",
-    live: "#",
+      image:"/projects/auth.png"
   },
 ];
 
@@ -171,10 +176,7 @@ function Projects() {
                     justify-center
                   "
                 >
-                  <ArrowUpRight
-                    size={50}
-                    className="text-cyan-400"
-                  />
+                  <img src={project.image} alt={project.title} />
                 </div>
 
                 <h3 className="text-2xl font-bold text-white">

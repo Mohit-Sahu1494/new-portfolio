@@ -60,13 +60,13 @@ const LoaderCore = ({
               {index <= value && (
                 <CheckFilled
                   className={cn("text-white/50", value === index &&
-                    "text-[#8B5CF6] opacity-100")} />
+                    "text-cyan-400 opacity-100")} />
               )}
             </div>
             <span
               className={cn(
                 "text-white/50",
-                value === index && "text-[#8B5CF6] opacity-100"
+                value === index && "text-cyan-400 opacity-100"
               )}>
               {loadingState.text}
             </span>
